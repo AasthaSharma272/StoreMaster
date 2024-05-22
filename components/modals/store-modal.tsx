@@ -1,14 +1,21 @@
 "use client";
 
-import * as z from "zod"; // importing everything from zod to create the store form
+import * as z from "zod"; // Importing everything from zod to create the store form
+import { zodResolver } from "@hookform/resolvers/zod"; // Importing zodResolver for integrating Zod with react-hook-form.
+
+import axios from "axios"; // Importing axios to call api
 
 import { useStoreModal } from "@/hooks/use-store-modal"; // Importing the custom hook to manage modal state.
+
 import { Modal } from "@/components/ui/modal"; // Importing the Modal component.
-import { useForm } from "react-hook-form"; // Importing useForm from react-hook-form for form handling.
-import { zodResolver } from "@hookform/resolvers/zod"; // Importing zodResolver for integrating Zod with react-hook-form.
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"; // Importing form components.
 import { Input } from "@/components/ui/input"; // Importing Input component.
 import { Button } from "@/components/ui/button"; // Importing Button component.
+
+import { useForm } from "react-hook-form"; // Importing useForm from react-hook-form for form handling.
+import toast from "react-hot-toast"; // Importing toast from react-hot-toast for notifications
+
+import { useState } from "react"; // Importing use state from React
 
 // form schema using Zod, requiring 'name' string field with at least one character.
 const formSchema = z.object({
@@ -23,6 +30,8 @@ const formSchema = z.object({
 export const StoreModal = () => {
     const storeModal = useStoreModal(); // Accessing the modal state and functions.
 
+    const [loading, setLoading] = useState(false); // use state to get functions of loading when the form is still being created
+
     // Setting up useForm with Zod resolver and default values.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -33,8 +42,23 @@ export const StoreModal = () => {
 
     // Function to handle form submission.
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        // TODO: create store
-    }
+        try{
+            // when submitted set loading to the true which disables rest of form components
+            setLoading(true);
+
+            // call the api in api package to create the store with the name as values given
+            const response = await axios.post('/api/stores', values);
+
+            // success notification
+            toast.success("Store created!");
+        } catch (error){
+            // Error notification
+            toast.error("Something went wrong.");
+        } finally {
+            // set the loading back to false to allow submission again
+            setLoading(false);
+        }
+    };
 
     return(
         <Modal
@@ -56,7 +80,9 @@ export const StoreModal = () => {
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="E-Commerce" {...field}/>
+                                        <Input disabled={loading} 
+                                        placeholder="E-Commerce" 
+                                        {...field}/>
                                     </FormControl>
                                     <FormMessage /> {/* Form error message */}
                                 </FormItem>
@@ -65,13 +91,14 @@ export const StoreModal = () => {
                             {/* Buttons for form actions */}
                             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
                                 {/* Cancel button */}
-                                <Button 
+                                <Button
+                                disabled={loading} 
                                 variant={"outline"}
                                 onClick={storeModal.onClose}>
                                     Cancel
                                 </Button>
                                 {/* Submit button */}
-                                <Button type="submit">Continue</Button>
+                                <Button disabled={loading} type="submit">Continue</Button>
                             </div>
                         </form>
                     </Form>
