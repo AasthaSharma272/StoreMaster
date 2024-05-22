@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar"; // Importing the navbar component
 import prismadb from "@/lib/prismadb"; // Importing prismadb instance
 import { auth } from "@clerk/nextjs/server"; // Importing auth function from @clerk/nextjs/server
 import { redirect } from "next/navigation"; // Importing redirect function from next/navigation
@@ -34,7 +35,7 @@ export default async function DashboardLayout({
     // Rendering the DashboardLayout component with navbar and children components
     return (
         <>
-            <div>This will be a navbar</div>
+            <Navbar />
             {children}
         </>
     );
