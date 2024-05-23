@@ -49,8 +49,8 @@ export const StoreModal = () => {
             // call the api in api package to create the store with the name as values given
             const response = await axios.post('/api/stores', values);
 
-            // success notification
-            toast.success("Store created!");
+            // after creating the first store, redirect to store dashboard
+            window.location.assign(`/${response.data.id}`);
         } catch (error){
             // Error notification
             toast.error("Something went wrong.");

@@ -37,7 +37,7 @@ export async function POST(
         
     } catch (error){
         // Logging and returning internal server error if any exception occurs
-        console.log('[STORES_POST]', error);
+        console.log('[STORE_POST]', error);
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
