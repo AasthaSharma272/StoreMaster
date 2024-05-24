@@ -21,12 +21,19 @@ export function MainNav({
     const params = useParams();
     
     // Define navigation routes ahead like settings, overview based on the current store ID
+    // Routes so far: Overview, Billboards, Settings
     const routes = [
         {
             href: `/${params.storeId}`,
             label: 'Overview',
             // Determine if the route is active based on the current pathname
             active: pathname === `/${params.storeId}`,
+        },
+        {
+            href: `/${params.storeId}/billboards`,
+            label: 'Billboards',
+            // Determine if the route is active based on the current pathname
+            active: pathname === `/${params.storeId}/billboards`,
         },
         {
             href: `/${params.storeId}/settings`,
