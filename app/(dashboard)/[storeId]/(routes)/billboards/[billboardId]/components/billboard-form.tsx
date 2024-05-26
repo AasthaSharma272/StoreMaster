@@ -17,15 +17,11 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import { Billboard } from "@prisma/client";
 
 // Define props for the BillboardForm component
 interface BillboardFormProps{
-    initialData: {
-        id: string; 
-        storeId: string; 
-        imageUrl: string; 
-        createdAt: Date; 
-        updatedAt: Date; } | null;
+    initialData: Billboard | null;
 }
 
 // Define form schema using Zod for update/creating billboard
@@ -90,7 +86,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             setLoading(true);
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
             router.refresh();
-            router.push("/"); // Redirect to home page
+            router.push(`/${params.storeId}/billboards`); // Redirect to home page
             toast.success("Billboard Deleted.");
         } catch (error) {
             toast.error("Make sure you remove categories using this billboard first.");
@@ -177,8 +173,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     </Button>
                 </form>
             </Form>
-            {/* Separator */}
-            <Separator />
         </>
     )
 }

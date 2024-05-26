@@ -18,16 +18,11 @@ import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { APiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
+import { Store } from "@prisma/client";
 
 // Define props for the SettingsForm component
 interface SettingsFormProps{
-    initialData: {
-        id: string; 
-        name: string; 
-        userId: string; 
-        createdAt: Date; 
-        updatedAt: Date; 
-    };
+    initialData: Store;
 }
 
 // Define form schema using Zod for update store name
