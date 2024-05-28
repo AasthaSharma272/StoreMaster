@@ -70,6 +70,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
             }
             router.refresh();
             router.push(`/${params.storeId}/sizes`); // takes you back to main size page
+            router.refresh();
             toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong."); // Show error toast
