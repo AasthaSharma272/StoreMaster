@@ -48,6 +48,18 @@ export function MainNav({
             active: pathname === `/${params.storeId}/sizes`,
         },
         {
+            href: `/${params.storeId}/colors`,
+            label: 'Colors',
+            // Determine if the route is active based on the current pathname
+            active: pathname === `/${params.storeId}/colors`,
+        },
+        {
+            href: `/${params.storeId}/products`,
+            label: 'Products',
+            // Determine if the route is active based on the current pathname
+            active: pathname === `/${params.storeId}/products`,
+        },
+        {
             href: `/${params.storeId}/settings`,
             label: 'Settings',
             // Determine if the route is active based on the current pathname
