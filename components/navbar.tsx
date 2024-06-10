@@ -7,6 +7,7 @@ import StoreSwitcher from "@/components/store-switcher";
 import { redirect } from "next/navigation";
 
 import prismadb from "@/lib/prismadb";
+import { ThemeToggle } from "./theme-toggle";
 
 // Define Navbar component as an asynchronous function
 const Navbar = async () => {
@@ -41,6 +42,8 @@ const Navbar = async () => {
                 {/* Render the UserButton component */}
                 {/* Align it to the right side */}
                 <div className="ml-auto flex items-center space-x-4">
+                    {/* theme toggle for dark mode switch */}
+                    <ThemeToggle />
                     <UserButton afterSignOutUrl="/" />
                 </div>
             </div>
